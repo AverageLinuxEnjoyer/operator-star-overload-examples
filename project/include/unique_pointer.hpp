@@ -20,8 +20,37 @@ public:
     T* operator->();
     T& operator*();
 
+    // reseteaza pointer-ul
+    void reset(T* pointer_);
+
 private:
     T* pointer;
 };
+
+template<class T>
+inline UniquePointer<T>::UniquePointer(T* pointer_)
+    : pointer(pointer_) {}
+
+template<class T>
+inline UniquePointer<T>::~UniquePointer() {
+    delete pointer;
+}
+
+template<class T>
+inline T* UniquePointer<T>::operator->() {
+    return pointer;
+}
+
+template<class T>
+inline T& UniquePointer<T>::operator*() {
+    return *pointer;
+}
+
+template<class T>
+inline void UniquePointer<T>::reset(T* pointer_) {
+    delete pointer;
+    pointer = pointer_;
+}
+
 
 #endif // UNIQUE_POINTER_HPP
